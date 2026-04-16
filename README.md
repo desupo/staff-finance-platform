@@ -53,6 +53,23 @@ dotnet run --project .\src\Services\LoanService\LoanService.Api
 dotnet run --project .\src\Services\FundClaimsService\FundClaimsService.Api
 ```
 
+## Secret Management Standard
+
+- Standard key: `ConnectionStrings:Mongo`
+- Local development: set `ConnectionStrings:Mongo` in `appsettings.Development.json` (already set to localhost by default)
+- Production: load from Azure Key Vault using managed identity
+
+For Key Vault, create the secret using double dashes:
+
+- `ConnectionStrings--Mongo` = your production Mongo/Cosmos connection string
+
+Each API can enable Key Vault by setting either:
+
+- `KeyVault:Uri` (recommended), or
+- `KeyVault:Name` (the app builds `https://<name>.vault.azure.net/`)
+
+If Key Vault is not configured or unavailable (for local/debug), the app falls back to local configuration.
+
 ## Branching Model
 
 - `main`: protected integration branch

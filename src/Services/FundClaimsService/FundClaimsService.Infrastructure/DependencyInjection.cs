@@ -22,6 +22,15 @@ public static class DependencyInjection
         var mongoOptions = configuration.GetSection(FundClaimsMongoOptions.SectionName).Get<FundClaimsMongoOptions>()
             ?? new FundClaimsMongoOptions();
 
+        mongoOptions.ConnectionString = configuration.GetConnectionString("Mongo")
+            ?? configuration[$"{FundClaimsMongoOptions.SectionName}:ConnectionString"]
+            ?? string.Empty;
+
+        if (string.IsNullOrWhiteSpace(mongoOptions.ConnectionString))
+        {
+            throw new InvalidOperationException("Mongo connection string is not configured. Set ConnectionStrings:Mongo or Mongo:ConnectionString.");
+        }
+
         services.AddDbContext<FundClaimsDbContext>(options =>
         {
             var client = new MongoClient(mongoOptions.ConnectionString);

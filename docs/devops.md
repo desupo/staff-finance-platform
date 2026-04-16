@@ -46,6 +46,13 @@ Good for:
 - `AZURE_AKS_CLUSTER`
 - `AZURE_ACR_NAME`
 
+## Key Vault Convention
+
+- Store Mongo connection string as Key Vault secret `ConnectionStrings--Mongo`
+- Configure app setting `KeyVault__Uri` (or `KeyVault__Name`) per service in Azure
+- Grant the app managed identity `Key Vault Secrets User` on the vault
+- Keep local/debug values in `appsettings.Development.json` using `ConnectionStrings:Mongo`
+
 ## Notes
 
 This repository ships both App Service and AKS deployment workflows so you can discuss tradeoffs in the interview rather than committing to only one hosting style.

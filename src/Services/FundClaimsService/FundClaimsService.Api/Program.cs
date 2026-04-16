@@ -1,9 +1,28 @@
+using Azure.Identity;
 using Asp.Versioning;
 using FundClaimsService.Application.Contracts;
 using FundClaimsService.Application.Services;
 using FundClaimsService.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (!builder.Environment.IsDevelopment())
+{
+    var keyVaultUriValue = builder.Configuration["KeyVault:Uri"];
+    if (string.IsNullOrWhiteSpace(keyVaultUriValue))
+    {
+        var keyVaultName = builder.Configuration["KeyVault:Name"];
+        if (!string.IsNullOrWhiteSpace(keyVaultName))
+        {
+            keyVaultUriValue = $"https://{keyVaultName}.vault.azure.net/";
+        }
+    }
+
+    if (Uri.TryCreate(keyVaultUriValue, UriKind.Absolute, out var keyVaultUri))
+    {
+        builder.Configuration.AddAzureKeyVault(keyVaultUri, new DefaultAzureCredential());
+    }
+}
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
