@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loanservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: loanservice
+  template:
+    metadata:
+      labels:
+        app: loanservice
+    spec:
+      containers:
+        - name: loanservice
+          image: stafffinanceacr.azurecr.io/loanservice:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: Mongo__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: stafffinance-secrets
+                  key: loan-mongo-connection
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loanservice
+spec:
+  selector:
+    app: loanservice
+  ports:
+    - port: 80
+      targetPort: 8080

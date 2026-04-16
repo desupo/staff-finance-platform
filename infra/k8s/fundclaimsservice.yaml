@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fundclaimsservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fundclaimsservice
+  template:
+    metadata:
+      labels:
+        app: fundclaimsservice
+    spec:
+      containers:
+        - name: fundclaimsservice
+          image: stafffinanceacr.azurecr.io/fundclaimsservice:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: Mongo__ConnectionString
+              valueFrom:
+                secretKeyRef:
+                  name: stafffinance-secrets
+                  key: fundclaims-mongo-connection
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fundclaimsservice
+spec:
+  selector:
+    app: fundclaimsservice
+  ports:
+    - port: 80
+      targetPort: 8080

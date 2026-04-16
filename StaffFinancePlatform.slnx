@@ -1,0 +1,26 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/BuildingBlocks.Application/BuildingBlocks.Application.csproj" />
+    <Project Path="src/BuildingBlocks/BuildingBlocks.Domain/BuildingBlocks.Domain.csproj" />
+    <Project Path="src/BuildingBlocks/BuildingBlocks.Infrastructure/BuildingBlocks.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/FundClaimsService/">
+    <Project Path="src/Services/FundClaimsService/FundClaimsService.Api/FundClaimsService.Api.csproj" />
+    <Project Path="src/Services/FundClaimsService/FundClaimsService.Application/FundClaimsService.Application.csproj" />
+    <Project Path="src/Services/FundClaimsService/FundClaimsService.Domain/FundClaimsService.Domain.csproj" />
+    <Project Path="src/Services/FundClaimsService/FundClaimsService.Infrastructure/FundClaimsService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/LoanService/">
+    <Project Path="src/Services/LoanService/LoanService.Api/LoanService.Api.csproj" />
+    <Project Path="src/Services/LoanService/LoanService.Application/LoanService.Application.csproj" />
+    <Project Path="src/Services/LoanService/LoanService.Domain/LoanService.Domain.csproj" />
+    <Project Path="src/Services/LoanService/LoanService.Infrastructure/LoanService.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/ArchitectureTests/ArchitectureTests.csproj" />
+    <Project Path="tests/FundClaimsService.UnitTests/FundClaimsService.UnitTests.csproj" />
+    <Project Path="tests/LoanService.UnitTests/LoanService.UnitTests.csproj" />
+  </Folder>
+</Solution>

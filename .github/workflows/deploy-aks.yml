@@ -1,0 +1,22 @@
+name: deploy-aks
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - run: az acr build --registry ${{ secrets.AZURE_ACR_NAME }} --image loanservice:${{ github.sha }} -f src/Services/LoanService/LoanService.Api/Dockerfile .
+      - run: az acr build --registry ${{ secrets.AZURE_ACR_NAME }} --image fundclaimsservice:${{ github.sha }} -f src/Services/FundClaimsService/FundClaimsService.Api/Dockerfile .
+      - run: az aks get-credentials --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} --name ${{ secrets.AZURE_AKS_CLUSTER }} --overwrite-existing
+      - run: kubectl apply -f infra/k8s

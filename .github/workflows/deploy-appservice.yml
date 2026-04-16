@@ -1,0 +1,33 @@
+name: deploy-appservice
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-loan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet publish src/Services/LoanService/LoanService.Api/LoanService.Api.csproj -c Release -o publish/loan
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: staff-finance-loan-api
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_LOAN }}
+          package: publish/loan
+
+  deploy-fund-claims:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - run: dotnet publish src/Services/FundClaimsService/FundClaimsService.Api/FundClaimsService.Api.csproj -c Release -o publish/fundclaims
+      - uses: azure/webapps-deploy@v3
+        with:
+          app-name: staff-finance-fundclaims-api
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_CLAIMS }}
+          package: publish/fundclaims
