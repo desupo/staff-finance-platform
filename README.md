@@ -27,6 +27,11 @@ Interview-grade sample platform built with:
 - `infra`: AKS manifests and deployment assets
 - `docs`: architecture and delivery guidance
 
+## Technical Documentation
+
+- `docs/architecture.md`: service boundaries, clean architecture, DDD notes, datastore strategy, event-driven flow
+- `docs/devops.md`: deployment targets, CI/CD notes, Git strategy, Key Vault convention, branch protection setup
+
 ## Why Cosmos DB for MongoDB
 
 This repo is intentionally designed for `Azure Cosmos DB for MongoDB vCore` so you get:
