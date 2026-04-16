@@ -7,6 +7,28 @@
 - require CI success before merge
 - keep one work item per branch
 
+## Branch Protection Setup (GitHub)
+
+Apply these settings to branch `main` in GitHub:
+
+1. Open repository settings: `Settings > Branches > Branch protection rules > Add rule`
+2. Branch name pattern: `main`
+3. Enable `Require a pull request before merging`
+4. Enable `Require approvals` and set required approvals to at least `1`
+5. Enable `Dismiss stale pull request approvals when new commits are pushed`
+6. Enable `Require status checks to pass before merging`
+7. Add required status checks from this repository's workflows (at minimum CI from `.github/workflows/ci.yml`)
+8. Enable `Require branches to be up to date before merging`
+9. Enable `Require conversation resolution before merging`
+10. Enable `Do not allow bypassing the above settings`
+11. Enable `Restrict who can push to matching branches` and do not grant direct push rights for day-to-day development
+
+### Working Rule
+
+- Never commit directly to `main`
+- Use short-lived branches: `feature/*`, `chore/*`, `fix/*`
+- Merge through pull requests only
+
 ## Suggested Work Items
 
 1. `Loan application submission`
