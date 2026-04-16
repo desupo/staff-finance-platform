@@ -2,12 +2,34 @@ name: deploy-function
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - functions/NotificationDispatcher/**
+      - .github/workflows/deploy-function.yml
 
 jobs:
   deploy-notification-dispatcher:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate required secrets
+        run: |
+          if [ -z "${{ secrets.AZURE_FUNCTIONAPP_NAME }}" ]; then
+            echo "Missing required secret: AZURE_FUNCTIONAPP_NAME"
+            exit 1
+          fi
+          if [ -z "${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}" ]; then
+            echo "Missing required secret: AZURE_FUNCTIONAPP_PUBLISH_PROFILE"
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
       - uses: azure/functions-action@v1
         with:
           app-name: ${{ secrets.AZURE_FUNCTIONAPP_NAME }}
