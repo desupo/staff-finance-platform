@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "src\\Services\\FundClaimsService\\FundClaimsService.Api\\FundClaimsService.Api.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\Services\\LoanService\\LoanService.Api\\LoanService.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
